@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  gpu-ml-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rtx5080-ml-container
+    
+    # GPU???RTX5080???
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    
+    # ????
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
+      - CUDA_VISIBLE_DEVICES=0
+      - PYTHONPATH=/app
+      - JUPYTER_ENABLE_LAB=yes
+    
+    # ?????????
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./notebooks:/app/notebooks
+      - ./outputs:/app/outputs
+      - ~/.cache/pip:/root/.cache/pip  # pip?????
+    
+    # ?????
+    ports:
+      - "8888:8888"  # Jupyter Notebook
+      - "6006:6006"  # TensorBoard
+      - "8000:8000"  # FastAPI
+    
+    # ????????
+    working_dir: /app
+    
+    # ?????Jupyter???
+    command: >
+      sh -c "
+        echo 'RTX5080 GPU??????...' &&
+        python -c 'import torch; print(f\"CUDA available: {torch.cuda.is_available()}\"); print(f\"GPU count: {torch.cuda.device_count()}\"); print(f\"GPU name: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"No GPU\"}\")' &&
+        jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''
+      "
+    
+    # ???????
+    restart: unless-stopped
+    
+    # ????
+    depends_on:
+      - tensorboard
+    
+    # ??????
+    networks:
+      - ml-network
+
+  # TensorBoard ????
+  tensorboard:
+    image: tensorflow/tensorflow:2.16.1-gpu
+    container_name: tensorboard-service
+    
+    # GPU??
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    
+    # ?????????
+    volumes:
+      - ./logs:/logs
+      - ./models:/models
+    
+    # ?????
+    ports:
+      - "6006:6006"
+    
+    # ????
+    command: tensorboard --logdir=/logs --host=0.0.0.0 --port=6006
+    
+    # ???????
+    restart: unless-stopped
+    
+    # ??????
+    networks:
+      - ml-network
+
+# ????????
+networks:
+  ml-network:
+    driver: bridge
+
+# ???????
+volumes:
+  pip-cache:
+    driver: local
