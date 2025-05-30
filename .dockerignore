@@ -1,13 +1,13 @@
 # .dockerignore
-# RTX5080 GPU???
+# RTX5080 GPU Environment
 
-# Git??
+# Git related
 .git
 .gitignore
 README.md
 LICENSE
 
-# Python??
+# Python related
 __pycache__/
 *.py[cod]
 *$py.class
@@ -30,7 +30,7 @@ wheels/
 *.egg
 MANIFEST
 
-# ????
+# Virtual environments
 .env
 .venv
 env/
@@ -39,7 +39,7 @@ ENV/
 env.bak/
 venv.bak/
 
-# IDE??
+# IDE related
 .vscode/
 .idea/
 *.swp
@@ -49,15 +49,15 @@ venv.bak/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# PyTorch??
+# PyTorch related
 *.pth
 *.pt
 
-# TensorFlow??
+# TensorFlow related
 *.pb
 *.h5
 
-# ????????????
+# Large data files
 *.csv
 *.json
 *.parquet
@@ -67,17 +67,17 @@ venv.bak/
 *.tar.gz
 *.rar
 
-# ??????
+# Log files
 *.log
 logs/
 
-# ??????
+# Temporary files
 *.tmp
 *.temp
 .DS_Store
 Thumbs.db
 
-# Docker??
+# Docker related
 .dockerignore
 Dockerfile
 docker-compose*.yml
@@ -86,21 +86,21 @@ docker-compose*.yml
 .github/
 .gitlab-ci.yml
 
-# ????????
+# Output directories
 outputs/
 results/
 checkpoints/
 
-# ???????????????
+# Large model files
 models/*.pth
 models/*.h5
 models/*.onnx
 
-# ?????????????????
+# Data directories (optional)
 data/raw/
 data/processed/
 
-# ?????
+# Test related
 .pytest_cache/
 .coverage
 htmlcov/
