@@ -1,97 +1,97 @@
-# RTX5080 GPU??? Makefile
+# RTX5080 GPU Environment Makefile
 
 .PHONY: help build up down restart logs shell gpu-test clean
 
-# ??????????
+# Default target
 help:
-	@echo "RTX5080 GPU Docker?? ??????"
+	@echo "RTX5080 GPU Docker Environment Management Commands"
 	@echo ""
-	@echo "?????????:"
-	@echo "  build       - Docker????????"
-	@echo "  up          - ???????"
-	@echo "  down        - ??????????"
-	@echo "  restart     - ????????"
-	@echo "  logs        - ?????"
-	@echo "  shell       - ??????bash???"
-	@echo "  gpu-test    - GPU????"
-	@echo "  jupyter     - Jupyter Notebook??????????"
-	@echo "  tensorboard - TensorBoard??????????"
-	@echo "  clean       - ????????????????"
-	@echo "  clean-all   - ???Docker ??????????"
+	@echo "Available commands:"
+	@echo "  build       - Build Docker image"
+	@echo "  up          - Start containers"
+	@echo "  down        - Stop and remove containers"
+	@echo "  restart     - Restart containers"
+	@echo "  logs        - Show logs"
+	@echo "  shell       - Access container shell"
+	@echo "  gpu-test    - Test GPU functionality"
+	@echo "  jupyter     - Show Jupyter Notebook access info"
+	@echo "  tensorboard - Show TensorBoard access info"
+	@echo "  clean       - Remove unused images and volumes"
+	@echo "  clean-all   - Remove all Docker resources (WARNING)"
 
-# Docker????????
+# Build Docker image
 build:
-	@echo "RTX5080?Docker?????????..."
+	@echo "Building RTX5080 Docker image..."
 	docker compose build --no-cache
 
-# ???????
+# Start containers
 up:
-	@echo "RTX5080 GPU??????..."
+	@echo "Starting RTX5080 GPU environment..."
 	docker compose up -d
-	@echo "?????"
+	@echo "Startup complete!"
 	@echo "Jupyter Notebook: http://localhost:8888"
 	@echo "TensorBoard: http://localhost:6006"
 
-# ??????????
+# Stop and remove containers
 down:
-	@echo "????????..."
+	@echo "Stopping containers..."
 	docker compose down
 
-# ????????
+# Restart containers
 restart:
-	@echo "?????????..."
+	@echo "Restarting containers..."
 	docker compose restart
 
-# ?????
+# Show logs
 logs:
 	docker compose logs -f
 
-# ??????bash???
+# Access container shell
 shell:
 	docker compose exec gpu-ml-app bash
 
-# GPU????
+# Test GPU functionality
 gpu-test:
-	@echo "GPU?????..."
+	@echo "Testing GPU functionality..."
 	docker compose exec gpu-ml-app python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}'); print(f'GPU count: {torch.cuda.device_count()}'); print(f'GPU name: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"No GPU\"}'); print(f'CUDA version: {torch.version.cuda}' if torch.cuda.is_available() else 'No CUDA')"
 
-# Jupyter Notebook??????
+# Jupyter Notebook access info
 jupyter:
-	@echo "Jupyter Notebook ??????:"
+	@echo "Jupyter Notebook Access Information:"
 	@echo "URL: http://localhost:8888"
-	@echo "????: ????????"
+	@echo "Token: None (pre-configured)"
 
-# TensorBoard??????  
+# TensorBoard access info
 tensorboard:
-	@echo "TensorBoard ??????:"
+	@echo "TensorBoard Access Information:"
 	@echo "URL: http://localhost:6006"
 
-# ?????????
+# Remove unused resources
 clean:
-	@echo "????Docker????????..."
+	@echo "Removing unused Docker resources..."
 	docker system prune -f
 	docker volume prune -f
 
-# ?Docker??????????
+# Remove all Docker resources (WARNING)
 clean-all:
-	@echo "??: ???Docker??????????"
-	@read -p "??????? (y/N): " confirm && [ "$$confirm" = "y" ]
+	@echo "WARNING: This will remove all Docker resources"
+	@read -p "Continue? (y/N): " confirm && [ "$$confirm" = "y" ]
 	docker system prune -a -f --volumes
 
-# ???????
+# Development setup
 dev-setup:
-	@echo "????????????..."
+	@echo "Setting up development environment..."
 	mkdir -p src data models notebooks outputs logs
-	@echo "???????????????:"
-	@echo "  src/        - ??????"
-	@echo "  data/       - ???????"  
-	@echo "  models/     - ???????"
-	@echo "  notebooks/  - Jupyter Notebook"
-	@echo "  outputs/    - ????"
-	@echo "  logs/       - ??????"
+	@echo "Directory structure created:"
+	@echo "  src/        - Source code"
+	@echo "  data/       - Data files"
+	@echo "  models/     - Trained models"
+	@echo "  notebooks/  - Jupyter Notebooks"
+	@echo "  outputs/    - Output results"
+	@echo "  logs/       - Log files"
 
-# ???????
+# Update packages
 update-packages:
-	@echo "Python?????????..."
+	@echo "Updating Python packages..."
 	docker compose exec gpu-ml-app pip install --upgrade pip
 	docker compose exec gpu-ml-app pip install --upgrade -r requirements.txt
