@@ -2,7 +2,7 @@
 
 Docker-based machine learning development environment optimized for NVIDIA RTX5080 GPU.
 
-## ? Features
+## Features
 
 - **RTX5080 GPU Full Support**: CUDA 12.6 + cuDNN 9
 - **Latest Frameworks**: PyTorch 2.5+, TensorFlow 2.16+
@@ -10,14 +10,14 @@ Docker-based machine learning development environment optimized for NVIDIA RTX50
 - **TensorBoard**: Real-time training monitoring
 - **FastAPI**: Web API development support
 
-## ? Requirements
+## Requirements
 
 - NVIDIA RTX5080 GPU
 - Docker & Docker Compose
 - NVIDIA Container Toolkit
 - Ubuntu 20.04+ / Windows 11 WSL2 / macOS (Intel/M1)
 
-## ? Setup
+## Setup
 
 ### 1. Clone Repository
 
@@ -42,7 +42,7 @@ make build
 make up
 ```
 
-## ?? Usage
+## Usage
 
 ### Jupyter Notebook
 
@@ -70,7 +70,7 @@ make gpu-test
 make shell
 ```
 
-## ? Project Structure
+## Project Structure
 
 ```
 .
@@ -86,7 +86,7 @@ make shell
 ??? logs/                  # Log files
 ```
 
-## ? Included Libraries
+## Included Libraries
 
 ### Deep Learning Frameworks
 - PyTorch 2.5+ (CUDA 12.6 support)
@@ -113,7 +113,7 @@ make shell
 - Seaborn
 - Plotly
 
-## ?? Common Commands
+## Common Commands
 
 ```bash
 # Start environment
@@ -135,7 +135,7 @@ make shell
 make clean
 ```
 
-## ? Troubleshooting
+## Troubleshooting
 
 ### GPU Not Detected
 
@@ -164,7 +164,7 @@ make build
 The `requirements.txt` has been fixed to use `soundfile==0.13.1`.
 The previous `soundfile==1.0.16` was a non-existent version.
 
-## ? Usage Examples
+## Usage Examples
 
 ### PyTorch GPU Check
 
@@ -185,22 +185,22 @@ print(f"GPU available: {len(tf.config.list_physical_devices('GPU')) > 0}")
 print(f"GPU devices: {tf.config.list_physical_devices('GPU')}")
 ```
 
-## ? Sample Notebook
+## Sample Notebook
 
 `notebooks/gpu_check.ipynb` contains sample code for environment verification.
 Use it after starting Jupyter Notebook.
 
-## ? Links
+## Links
 
 - [PyTorch Documentation](https://pytorch.org/docs/)
 - [TensorFlow Documentation](https://www.tensorflow.org/api_docs)
 - [NVIDIA CUDA Documentation](https://docs.nvidia.com/cuda/)
 
-## ? License
+## License
 
 This project is licensed under the MIT License.
 
-## ? Contributing
+## Contributing
 
 Bug reports and feature requests are welcome via Issues.
 Pull requests are also appreciated!
